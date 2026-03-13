@@ -298,7 +298,9 @@ function getRequiredHoursPerMonth(textFile, rateFile, bonusCount, driverID, mont
     const targetMonth = Number(month);
 
     let dayOff = null;
-    for (let i = 1; i < rateLines.length; i++) {
+
+    // driverRates.txt has data rows, not necessarily a header row
+    for (let i = 0; i < rateLines.length; i++) {
         const parts = rateLines[i].split(",");
         if (parts[0] === driverID) {
             dayOff = parts[1];
@@ -348,7 +350,8 @@ function getNetPay(driverID, actualHours, requiredHours, rateFile) {
     let basePay = 0;
     let tier = 0;
 
-    for (let i = 1; i < rateLines.length; i++) {
+    // driverRates.txt has data rows, not necessarily a header row
+    for (let i = 0; i < rateLines.length; i++) {
         const parts = rateLines[i].split(",");
 
         if (parts[0] === driverID) {
@@ -379,6 +382,7 @@ function getNetPay(driverID, actualHours, requiredHours, rateFile) {
 
     return basePay - salaryDeduction;
 }
+
 
 module.exports = {
     getShiftDuration,
